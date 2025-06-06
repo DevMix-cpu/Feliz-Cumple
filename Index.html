@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🎂🕯️ ¡Un año más brillante! ✨🌟</title>
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden !important;
+            background: #000;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .sky {
+            position: absolute;
+            top: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(to bottom, #000000, #0a0a23);
+            overflow: hidden;
+        }
+
+        .moon {
+            position: absolute;
+            top: 8vh;
+            left: 70vw;
+            width: 12vw;
+            height: 12vw;
+            max-width: 120px;
+            max-height: 120px;
+            aspect-ratio: 1 / 1;
+            background: #e8e4e4;
+            border-radius: 50%;
+            box-shadow: 0 0 3vw #e8e4e4;
+        }
+
+        .stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .shooting-star {
+            position: absolute;
+            width: 2px;
+            height: 100px;
+            background: white;
+            opacity: 0.8;
+            transform: rotate(45deg);
+            animation: shoot 1s linear forwards;
+        }
+
+        @keyframes shoot {
+            0% {
+                transform: translate(0, 0) rotate(45deg);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translate(-300px, 300px) rotate(45deg);
+                opacity: 0;
+            }
+        }
+
+        .particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: particle 1.5s ease-out forwards;
+        }
+
+        @keyframes particle {
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translate(var(--dx), var(--dy)) scale(0.5);
+                opacity: 0;
+            }
+        }
+
+        .message {
+            position: absolute;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-shadow: 0 0 5px #fff;
+            animation: floatUp 3s ease-out forwards;
+            pointer-events: none;
+        }
+
+        @keyframes floatUp {
+            0% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            100% {
+                opacity: 0;
+                transform: translateY(-100px);
+            }
+        }
+
+
+
+        @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+
+        .birthday-message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Great Vibes', cursive;
+            font-size: 4rem;
+            font-weight: normal;
+            text-align: center;
+            background: linear-gradient(90deg, #ff9a9e, #fad0c4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            animation: fadeInOut 6s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes fadeInOut {
+
+            0%,
+            100% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.95);
+            }
+
+            50% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+    </style>
+</head>
+
+<body onclick="addBackgroundMusic()">
+    <div class="sky" onclick="explode(event);">
+        <div class="moon"></div>
+        <div class="stars"></div>
+        <div class="birthday-message" id="birthdayMessage">¡Feliz cumpleaños! ❤️</div>
+    </div>
+    <script>
+        const starsContainer = document.querySelector('.stars');
+
+        const gradients = [
+            "linear-gradient(90deg, #ff9a9e, #fad0c4)",       // rosa suave a durazno
+            "linear-gradient(90deg, #a18cd1, #fbc2eb)",       // lavanda a rosa claro
+            "linear-gradient(90deg, #c2e9fb, #a1c4fd)",       // celeste a azul pastel
+            "linear-gradient(90deg, #fbc2eb, #a6c1ee)",       // rosa claro a lila
+            "linear-gradient(90deg, #d4fc79, #96e6a1)",       // verde lima suave a menta
+            "linear-gradient(90deg, #fddb92, #d1fdff)",       // dorado pastel a celeste
+            "linear-gradient(90deg, #ffecd2, #fcb69f)",       // crema a coral suave
+            "linear-gradient(90deg, #e0c3fc, #8ec5fc)",       // violeta claro a azul cielo
+            "linear-gradient(90deg, #f6d365, #fda085)",       // amarillo suave a naranja pastel
+            "linear-gradient(90deg, #cfd9df, #e2ebf0)"        // gris claro a azul hielo
+        ];
+
+        const messages = [
+            "No sé cómo lo haces, pero tu sonrisa siempre me alegra el día 😊✨",
+            "Te quiero… y tu sonrisa tiene mucho que ver con eso 💛😁",
+            "A veces solo necesito verte sonreír para que todo tenga sentido 🧩😊",
+            "No sé si lo sabes, pero tu sonrisa tiene poderes mágicos ✨🪄😁",
+            "Te quiero, y cada vez que sonríes, me acuerdo de por qué 💕🙂",
+            "Hay días en los que solo con verte sonreír ya estoy bien 🌞😄",
+            "No es por exagerar, pero tu sonrisa podría ser mi cosa favorita del mundo 🌍💘😁",
+            "Te quiero más que a mi batería al 100% 🔋❤️",
+            "Eres el algoritmo que siempre me recomienda felicidad 🤖💘",
+            "Contigo no necesito WiFi, ya tengo toda la conexión que necesito 📶💕",
+            "Te quiero como a mi celular: siempre cerca y con cuidado de no dejarte caer 📱💓",
+            "Eres el único bug que no quiero corregir 🐞❤️",
+            "Te quiero más que a una actualización sin errores 😅🔄💖",
+            "Eres mi notificación favorita, aunque no suenes 📳💬❤️"
+        ];
+        const colors = ["#ffb6c1", "#add8e6", "#dda0dd", "#f0e68c", "#87cefa"];
+        let messageIndex = 0;
+        let birthdayMessageIndex = 0;
+        let musicStarted = false;
+
+        function createStar() {
+            const star = document.createElement('div');
+            const size = Math.random() * 2 + 1;
+            star.style.width = `${size}px`;
+            star.style.height = `${size}px`;
+            star.style.background = 'white';
+            star.style.borderRadius = '50%';
+            star.style.position = 'absolute';
+            star.style.top = `${Math.random() * 100}%`;
+            star.style.left = `${Math.random() * 100}%`;
+            star.style.opacity = 0;
+            star.style.transition = 'opacity 1s ease-in-out';
+            starsContainer.appendChild(star);
+
+            setTimeout(() => {
+                star.style.opacity = 1;
+                setTimeout(() => {
+                    star.style.opacity = 0;
+                    setTimeout(() => starsContainer.removeChild(star), 1000);
+                }, 2000 + Math.random() * 2000);
+            }, Math.random() * 2000);
+        }
+
+        function createShootingStar() {
+            const star = document.createElement('div');
+            star.classList.add('shooting-star');
+            star.style.top = `${Math.random() * 50 + 10}vh`;
+            star.style.left = `${Math.random() * 80 + 10}vw`;
+            starsContainer.appendChild(star);
+
+            setTimeout(() => {
+                starsContainer.removeChild(star);
+            }, 1000);
+        }
+
+        function createFirework() {
+            const x = Math.random() * window.innerWidth;
+            const y = Math.random() * window.innerHeight * 0.5;
+
+            // Partículas de colores
+            const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff'];
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = `${x}px`;
+                particle.style.top = `${y}px`;
+                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                const angle = Math.random() * 2 * Math.PI;
+                const distance = Math.random() * 150;
+                const dx = Math.cos(angle) * distance + 'px';
+                const dy = Math.sin(angle) * distance + 'px';
+                particle.style.setProperty('--dx', dx);
+                particle.style.setProperty('--dy', dy);
+                document.body.appendChild(particle);
+                setTimeout(() => particle.remove(), 1500);
+            }
+        }
+
+        function explode(event) {
+            const x = event.clientX;
+            const y = event.clientY;
+
+            // Partículas
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = `${x}px`;
+                particle.style.top = `${y}px`;
+                const angle = Math.random() * 2 * Math.PI;
+                const distance = Math.random() * 100;
+                const dx = Math.cos(angle) * distance + 'px';
+                const dy = Math.sin(angle) * distance + 'px';
+                particle.style.setProperty('--dx', dx);
+                particle.style.setProperty('--dy', dy);
+                document.body.appendChild(particle);
+                setTimeout(() => particle.remove(), 1000);
+            }
+
+            // Mensaje
+            const message = document.createElement('div');
+            message.className = 'message';
+            message.textContent = messages[messageIndex];
+            message.style.left = `${x}px`;
+            message.style.top = `${y}px`;
+            message.style.color = colors[messageIndex % colors.length];
+            document.body.appendChild(message);
+
+            messageIndex = (messageIndex + 1) % messages.length;
+
+            setTimeout(() => message.remove(), 3000);
+        }
+
+        function updateBirthdayMessage() {
+            const birthdayMessage = document.getElementById('birthdayMessage');
+            birthdayMessage.style.background = gradients[birthdayMessageIndex % gradients.length];
+            birthdayMessage.style.webkitBackgroundClip = "text";
+            birthdayMessage.style.webkitTextFillColor = "transparent";
+            birthdayMessageIndex = (birthdayMessageIndex + 1) % colors.length;
+        }
+
+
+        function addBackgroundMusic() {
+            if (!musicStarted) {
+                const iframe = document.createElement('iframe');
+                iframe.className = 'hidden-audio';
+                iframe.src = "https://www.youtube.com/embed/WdRoAanTUxc?autoplay=1&loop=1&playlist=WdRoAanTUxc";
+                iframe.allow = "autoplay";
+                document.body.appendChild(iframe);
+                musicStarted = true;
+            }
+        }
+
+        setInterval(createStar, 80);
+        setInterval(createShootingStar, 3000 + Math.random() * 2000);
+        setInterval(createShootingStar, 3000 + Math.random() * 2000);
+        setInterval(createShootingStar, 3000 + Math.random() * 2000);
+        setInterval(createFirework, 1500);
+        setInterval(createFirework, 1500);
+        setInterval(createFirework, 1500);
+        setInterval(updateBirthdayMessage, 5000);
+    </script>
+</body>
+
+</html>
